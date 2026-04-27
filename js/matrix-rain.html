@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Matrix Rain</title>
+<style>
+    body {
+        margin: 0;
+        background: black;
+        overflow: hidden;
+    }
+    canvas {
+        display: block;
+    }
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const REFRESH_RATE = 40; // ms
+
+class Drop {
+    constructor(x) {
+        this.x = x;
+        this.y = 1;
+        this.speed = 0.1 + Math.random();
+        this.trail_len = 10 + Math.floor(Math.random() * 10);
+    }
+}
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let width, height;
+let cols;
+let fontSize = 16;
+let drops = [];
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    width = canvas.width;
+    height = canvas.height;
+
+    cols = Math.floor(width / fontSize);
+
+    drops = [];
+    for (let i = 0; i < cols; i++) {
+        drops.push(new Drop(i));
+    }
+
+    ctx.font = fontSize + "px monospace";
+}
+
+function getChar() {
+    return Math.random() > 0.5 ? "0" : "1";
+}
+
+function draw() {
+    ctx.fillStyle = "rgba(0,0,0,0.1)";
+    ctx.fillRect(0, 0, width, height);
+
+    for (let i = 0; i < cols; i++) {
+        const drop = drops[i];
+        const headY = Math.floor(drop.y);
+
+        let x = drop.x * fontSize;
+
+        // head
+        if (headY * fontSize < height) {
+            ctx.fillStyle = "rgb(150,255,150)";
+            ctx.fillText(getChar(), x, headY * fontSize);
+        }
+
+        // trail
+        for (let j = 1; j <= drop.trail_len; j++) {
+            let ty = headY - j;
+            if (ty < 0) continue;
+
+            let ratio = 1 - (j / drop.trail_len);
+            let green = Math.floor(255 * ratio);
+
+            ctx.fillStyle = `rgb(0,${green},0)`;
+            ctx.fillText(getChar(), x, ty * fontSize);
+        }
+
+        // move
+        drop.y += drop.speed;
+
+        // reset
+        if ((drop.y - drop.trail_len) * fontSize > height) {
+            drop.y = 0;
+            drop.speed = 0.1 + Math.random();
+        }
+    }
+}
+
+window.addEventListener("resize", resize);
+
+resize();
+setInterval(draw, REFRESH_RATE);
+</script>
+
+</body>
+</html>
