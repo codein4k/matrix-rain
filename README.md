@@ -15,7 +15,7 @@ This repository is based on a full step-by-step tutorial where everything is exp
 * How to build smooth **terminal animations**
 * How to generate **random ASCII characters**
 
-Video on youtube: 
+Video on youtube: [MatrixRain!](https://youtu.be/ueLN50HHhjw?si=xLoCj42JxLnuZfnf)
 
 ---
 
