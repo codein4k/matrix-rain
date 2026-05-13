@@ -20,7 +20,6 @@ type Drop struct {
 }
 
 func getTerminalSize() (int, int) {
-	// مشابه رویکرد ساده در نسخه Rust
 	cmd := exec.Command("sh", "-c", "stty size < /dev/tty")
 	out, err := cmd.Output()
 	if err != nil {
@@ -115,7 +114,6 @@ func main() {
 			}
 		}
 
-		// flush (اختیاری ولی بهتر)
 		os.Stdout.Sync()
 
 		time.Sleep(REFRESH_RATE)
