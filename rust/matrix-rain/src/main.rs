@@ -14,7 +14,6 @@ struct Drop {
 }
 
 fn get_terminal_size() -> (usize, usize) {
-    // روش ساده و cross-platform: اجرای دستور stty
     let output = Command::new("sh")
         .arg("-c")
         .arg("stty size < /dev/tty")
