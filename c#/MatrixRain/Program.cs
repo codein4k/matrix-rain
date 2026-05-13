@@ -54,7 +54,6 @@ class Program
 
     static void Main()
     {
-        // پیشنهاد: خروجی بافر نشه تا فریم‌ها سریع‌تر دیده بشن
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         GetTerminalSize(out width, out height);
